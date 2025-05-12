@@ -1,0 +1,3 @@
+runtime: nodejs22  # 使用目前 GAE 支援的 Node.js 版本
+instance_class: F1  # 免費等級，依需求可調整
+env: standard       # 選用 standard 環境（最簡單）
