@@ -20,7 +20,12 @@ router.post('/', async (req, res) => {
           p.special_code as special_code0,       
           p.description,
           p.ingredients,
-          v.name AS vendor_name
+          v.name AS vendor_name,
+          (
+          SELECT JSON_ARRAYAGG(JSON_OBJECT('capacity', pv.capacity, 'price', pv.price))
+          FROM products_variants pv
+          WHERE pv.product_id = p.id
+        ) AS variant_prices
         FROM product_images_variants piv
         INNER JOIN (
             SELECT product_id, MIN(special_code) AS first_special_code
