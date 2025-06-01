@@ -191,6 +191,20 @@ router.put('/update', async (req, res) => {
   }
 });
 
+router.get("/all_user", async (req, res) => {
+  try {
+    const [user] = await pool.execute(
+      `
+      SELECT * FROM users 
+      LEFT JOIN users_roles ON users.id = users_roles.user_id 
+      LEFT JOIN roles ON users_roles.role_id = roles.id 
+      `);
+
+    res.status(200).json(user);
+  } catch (err) {
+    res.status(500).json({ message: "Server error", error: err });
+  }
+});
 
 // Express route（例如 routes/user.ts）
 router.get("/:id", async (req, res) => {
